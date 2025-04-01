@@ -1,16 +1,16 @@
-# Cloudflare Workers OpenAPI 3.1
+# GitHub Secret Keeper for Cloudflare Workers
 
-This is a Cloudflare Worker with OpenAPI 3.1 using [chanfana](https://github.com/cloudflare/chanfana) and [Hono](https://github.com/honojs/hono).
+This is a fork of https://github.com/HenrikJoreteg/github-secret-keeper designed for cloudflare workers instead of Heroku/Express.
 
-This is an example project made to be used as a quick start into building OpenAPI compliant Workers that generates the
-`openapi.json` schema automatically from code and validates the incoming request to the defined parameters or request body.
+The endpoint uses query parameters like GitHub but unlike HenrikJoreteg. Rate limiting uses the query string to rate limit one request per 10 seconds by default.
+
+The architecture is a Cloudflare Worker with OpenAPI 3.1 using [chanfana](https://github.com/cloudflare/chanfana) and [Hono](https://github.com/honojs/hono).
+
 
 ## Get started
 
 1. Sign up for [Cloudflare Workers](https://workers.dev). The free tier is more than enough for most use cases.
-2. Clone this project and install dependencies with `npm install`
-3. Run `wrangler login` to login to your Cloudflare account in wrangler
-4. Run `wrangler deploy` to publish the API to Cloudflare Workers
+2. Clone this project and install dependencies with `npm i`
 
 ## Project structure
 
@@ -20,6 +20,17 @@ This is an example project made to be used as a quick start into building OpenAP
 
 ## Development
 
-1. Run `wrangler dev` to start a local instance of the API.
+1. Run `npx wrangler dev` to start a local instance of the API.
 2. Open `http://localhost:8787/` in your browser to see the Swagger interface where you can try the endpoints.
 3. Changes made in the `src/` folder will automatically trigger the server to reload, you only need to refresh the Swagger interface.
+4. The app runs out of `index.ts` 
+
+## Deployment
+
+1. Have a Cloudflare account
+2. Use `npx wrangler login` to login to Cloudflare
+3. Use `npx wrangler deploy` to deploy to Cloudflare
+4. Visit the Cloudflare dashboard to tweak settings:
+   - add secrets in the form of client_id=client_secret for your GitHub OAuth apps
+   - change the worker's name
+   - add any extra custom domains (note that more than one level of subdomain may require extra SSL certificates) such as `ghsk.your.domain`
