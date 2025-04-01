@@ -1,23 +1,27 @@
 import { fromHono } from "chanfana";
 import { Hono } from "hono";
-import { TaskCreate } from "./endpoints/taskCreate";
-import { TaskDelete } from "./endpoints/taskDelete";
-import { TaskFetch } from "./endpoints/taskFetch";
-import { TaskList } from "./endpoints/taskList";
+import { cors } from "hono/cors";
+import { checkOriginMiddleware } from "middlewares/origin";
+import { rateLimitMiddleware } from "middlewares/rateLimit";
+import { GitHubOAuthExchange } from "./endpoints/oauth/github/codeForToken";
 
-// Start a Hono app
 const app = new Hono();
-
-// Setup OpenAPI registry
+const origin = (o) => {
+  let admit = o.startsWith("https://");
+  admit &&= o.endsWith("njg4ne.github.io") || o.endsWith("gardella.cc");
+  // admit ||= o.startsWith("chrome-extension://");
+  return admit ? o : null;
+};
+const corsOptions = {
+  origin,
+};
+app.use("*", cors(corsOptions));
+app.use("*", rateLimitMiddleware);
+app.use("*", checkOriginMiddleware);
 const openapi = fromHono(app, {
-	docs_url: "/",
+  docs_url: "/",
 });
 
-// Register OpenAPI endpoints
-openapi.get("/api/tasks", TaskList);
-openapi.post("/api/tasks", TaskCreate);
-openapi.get("/api/tasks/:taskSlug", TaskFetch);
-openapi.delete("/api/tasks/:taskSlug", TaskDelete);
+openapi.post("/api/oauth/github/access_token", GitHubOAuthExchange);
 
-// Export the Hono app
 export default app;
