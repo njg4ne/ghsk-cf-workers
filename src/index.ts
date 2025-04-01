@@ -15,12 +15,12 @@ const origin = (o) => {
 const corsOptions = {
   origin,
 };
-app.use("*", cors(corsOptions));
-app.use("*", rateLimitMiddleware);
-app.use("*", checkOriginMiddleware);
 const openapi = fromHono(app, {
   docs_url: "/",
 });
+app.use("*", cors(corsOptions));
+app.use("*", rateLimitMiddleware);
+app.use("*", checkOriginMiddleware);
 
 openapi.post("/api/oauth/github/access_token", GitHubOAuthExchange);
 

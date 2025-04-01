@@ -9,7 +9,6 @@
 		"cf-typegen": "wrangler types"
 	},
 	"dependencies": {
-		"@elithrar/workers-hono-rate-limit": "^0.4.3",
 		"chanfana": "^2.0.2",
 		"hono": "^4.4.7",
 		"zod": "^3.23.8"
