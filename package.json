@@ -1,19 +1,23 @@
 {
-  "name": "github-secret-keeper",
-  "description": "Microservice to enable GitHub login for multiple server-less applications.",
-  "version": "1.0.0",
-  "author": "Henrik Joreteg <henrik@joreteg.com>",
-  "dependencies": {
-    "boom": "^2.8.0",
-    "extend-object": "^1.0.0",
-    "good": "^6.3.0",
-    "good-console": "^5.0.3",
-    "got": "^4.2.0",
-    "hapi": "^10.0.0"
-  },
-  "devDependencies": {
-    "standard": "^5.2.2"
-  },
-  "license": "MIT",
-  "main": "server.js"
+	"name": "cloudflare-workers-openapi",
+	"version": "0.0.1",
+	"private": true,
+	"scripts": {
+		"deploy": "wrangler deploy",
+		"dev": "wrangler dev",
+		"start": "wrangler dev",
+		"cf-typegen": "wrangler types"
+	},
+	"dependencies": {
+		"@elithrar/workers-hono-rate-limit": "^0.4.3",
+		"chanfana": "^2.0.2",
+		"hono": "^4.4.7",
+		"zod": "^3.23.8"
+	},
+	"devDependencies": {
+		"@cloudflare/workers-types": "^4.20250327.0",
+		"@types/node": "20.8.3",
+		"@types/service-worker-mock": "^2.0.1",
+		"wrangler": "^4.6.0"
+	}
 }
